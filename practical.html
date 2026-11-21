@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VS Cafe</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #fff5e6;
+            margin: 0;
+            color: #4b2e1f;
+        }
+
+        header {
+            background-color: #4b2e1f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #d6a77a;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b2e1f;
+            margin: 15px;
+            font-weight: bold;
+        }
+
+        .welcome {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            width: 180px;
+            margin: 15px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px #ccc;
+        }
+
+        .card h2 {
+            font-size: 40px;
+        }
+
+        button {
+            background-color: #6b4226;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #a66a3f;
+        }
+
+        #order {
+            background-color: white;
+            margin: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #4b2e1f;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>☕ VS CAFE</h1>
+    <p>Good Coffee, Good Mood!</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#order">My Order</a>
+</nav>
+
+<div class="welcome" id="home">
+    <h2>Welcome to VS Cafe!</h2>
+    <p>Enjoy delicious food and refreshing drinks with your friends.</p>
+</div>
+
+<h2 style="text-align:center;" id="menu">Our Menu</h2>
+
+<div class="menu">
+
+    <div class="card">
+        <h2>☕</h2>
+        <h3>Coffee</h3>
+        <p>₹100</p>
+        <button onclick="add(100, 'Coffee')">Add</button>
+    </div>
+
+    <div class="card">
+        <h2>🍵</h2>
+        <h3>Tea</h3>
+        <p>₹50</p>
+        <button onclick="add(50, 'Tea')">Add</button>
+    </div>
+
+    <div class="card">
+        <h2>🥪</h2>
+        <h3>Sandwich</h3>
+        <p>₹120</p>
+        <button onclick="add(120, 'Sandwich')">Add</button>
+    </div>
+
+    <div class="card">
+        <h2>🍔</h2>
+        <h3>Burger</h3>
+        <p>₹100</p>
+        <button onclick="add(100, 'Burger')">Add</button>
+    </div>
+
+    <div class="card">
+        <h2>🍕</h2>
+        <h3>Pizza</h3>
+        <p>₹220</p>
+        <button onclick="add(220, 'Pizza')">Add</button>
+    </div>
+
+    <div class="card">
+        <h2>🧋</h2>
+        <h3>Cold Coffee</h3>
+        <p>₹110</p>
+        <button onclick="add(110, 'Cold Coffee')">Add</button>
+    </div>
+
+    <div class="card">
+        <h2>🍹</h2>
+        <h3>Mocktail</h3>
+        <p>₹150</p>
+        <button onclick="add(150, 'Mocktail')">Add</button>
+    </div>
+
+     <div class="card">
+            <h2>🍰</h2>
+            <h3>Cake</h3>
+            <p>₹200</p>
+            <button onclick="add(200, 'Cake')">Add</button>
+     </div>
+
+     <div class="card">
+            <h2>🍩</h2>
+            <h3>Doughnut</h3>
+            <p>₹80</p>
+            <button onclick="add(80, 'Doughnut')">Add</button>
+     </div>
+
+     <div class="card">
+            <h2>🍪</h2>
+            <h3>Cookies</h3>
+            <p>₹60</p>
+            <button onclick="add(60, 'Cookies')">Add</button>
+     </div>
+
+</div>
+
+<div id="order">
+    <h2>My Order</h2>
+
+    <p id="items">No items selected.</p>
+
+    <h3>Total: ₹<span id="total">0</span></h3>
+
+    <button onclick="resetOrder()">Reset</button>
+    <button onclick="confirmOrder()">Confirm Order</button>
+</div>
+
+<footer>
+    <p>© 2026 Sour Cafe</p>
+    <p>Thank you for visiting us! ❤️</p>
+</footer>
+
+<script>
+
+    let total = 0;
+    let items = {};
+
+    function add(price, name) {
+
+        if(items[name]) {
+            items[name].quantity++;
+        } else {
+            items[name] = {
+                price: price,
+                quantity: 1
+            };
+        }
+
+        showOrder();
+    }
+
+    function showOrder() {
+
+        let output = "";
+        total = 0;
+
+        for(let name in items) {
+
+            let price = items[name].price;
+            let quantity = items[name].quantity;
+            let amount = price * quantity;
+
+            total = total + amount;
+
+            output += name + 
+            " | Quantity: " + quantity +
+            " | ₹" + price + " × " + quantity +
+            " = ₹" + amount + "<br><br>";
+        }
+
+        if(output == "") {
+            output = "No items selected.";
+        }
+
+        document.getElementById("items").innerHTML = output;
+        document.getElementById("total").innerHTML = total;
+    }
+
+    function resetOrder() {
+
+        total = 0;
+        items = {};
+
+        showOrder();
+    }
+
+    function confirmOrder() {
+
+        if(total == 0) {
+            alert("Please select an item first!");
+        } else {
+            alert("Your order is confirmed! Total: ₹" + total);
+            resetOrder();
+        }
+    }
+
+</script>
+
+</body>
+</html>
